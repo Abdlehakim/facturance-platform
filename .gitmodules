@@ -7,3 +7,6 @@
 [submodule "apps/admin-dashboard"]
 	path = apps/admin-dashboard
 	url = https://github.com/Abdlehakim/facturance-admin-dashboard.git
+[submodule "apps/desktop-app"]
+	path = apps/desktop-app
+	url = https://github.com/Abdlehakim/facturance-desktop-app.git
