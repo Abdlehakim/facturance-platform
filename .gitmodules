@@ -19,3 +19,6 @@
 [submodule "services/client-api"]
 	path = services/client-api
 	url = https://github.com/Abdlehakim/facturance-client-api.git
+[submodule "services/admin-api"]
+	path = services/admin-api
+	url = https://github.com/Abdlehakim/facturance-admin-api.git
