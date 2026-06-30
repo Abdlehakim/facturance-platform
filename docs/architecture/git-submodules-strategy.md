@@ -1,29 +1,16 @@
 # Git Submodules Strategy
 
-## Purpose
+## Overview
 
-The `facturance-platform` repository is the orchestration repository for the Facturance Platform. It owns the high-level structure, shared documentation, database planning assets, infrastructure planning assets, and repository coordination rules.
+`facturance-platform` is the main orchestration repository for the Facturance Platform.
 
-Application and service implementation code will live in independent repositories and will be mounted into this orchestration repository as Git submodules when those repositories are created.
+The orchestration repository keeps project-wide documentation, database assets, infrastructure assets, shared package planning, GitHub workflow configuration, and references to future application and service repositories.
 
-## Repository Roles
+## Application and Service Repositories
 
-### Orchestration Repository
+Each app and service will live in its own GitHub repository.
 
-The root `facturance-platform` repository manages:
-
-- Project-wide documentation
-- Database schema planning and migration structure
-- Infrastructure and deployment planning assets
-- GitHub workflow definitions
-- Repository-level rules and standards
-- Submodule references for applications and services
-
-The orchestration repository must not become a dumping ground for application or service implementation code.
-
-### Application Repositories
-
-Each application under `apps/` is planned to become an independent Git repository:
+Planned application repositories:
 
 - `apps/website`
 - `apps/client-dashboard`
@@ -31,11 +18,7 @@ Each application under `apps/` is planned to become an independent Git repositor
 - `apps/desktop-app`
 - `apps/mobile-app`
 
-Each application repository can choose the framework, build process, deployment target, and release cycle approved for that component.
-
-### Service Repositories
-
-Each service under `services/` is planned to become an independent Git repository:
+Planned service repositories:
 
 - `services/auth-api`
 - `services/client-api`
@@ -43,67 +26,33 @@ Each service under `services/` is planned to become an independent Git repositor
 - `services/sync-api`
 - `services/worker`
 
-Each service repository can be developed, tested, versioned, and deployed independently.
+Each repository will be added to this orchestration repository as a Git submodule when it is created and ready to be linked.
 
 ## Independent Deployment
 
-Applications and services must be designed so they can be deployed independently whenever practical.
+Each app and service should be designed so it can be deployed independently.
 
-This supports:
+This approach supports separate release cycles, smaller deployment risk, clearer ownership, focused CI/CD pipelines, and future microservice compatibility.
 
-- Separate release cycles
-- Smaller deployment blast radius
-- Clear ownership boundaries
-- Service-specific CI/CD pipelines
-- Independent scaling
-- Future microservice compatibility
+## Placeholder Folder Rules
 
-Shared contracts must be documented and versioned carefully so independent deployment does not break compatibility.
+Submodule folders must not contain normal source code before they are linked to their independent repositories.
 
-## Submodule Update Rules
+Before a submodule is linked, each reserved app or service folder must contain only a minimal `README.md` explaining that the folder is reserved for a future Git submodule.
 
-Git submodules must be updated intentionally.
+Do not initialize frameworks, install packages, create package manifests, or add application or service code inside these placeholder folders.
 
-Developers must:
+## Submodule Updates
 
-- Know which submodule commit is being updated.
-- Review the changes inside the submodule repository.
-- Update the orchestration repository only after selecting the intended submodule commit.
-- Document important app or service version changes in the related pull request.
-- Avoid accidental submodule pointer changes.
+Submodules must be updated intentionally.
 
-The orchestration repository should always point to known-good submodule commits.
+When updating a submodule reference, developers must review the target repository changes, select the intended commit, and commit the updated submodule pointer in the orchestration repository.
 
-## App and Service Folder Rules
+The orchestration repository should always point to known-good app and service commits.
 
-Before submodules are created, app and service folders must contain only minimal placeholder documentation.
+## Shared Packages
 
-Do not:
+Shared packages may remain in the main repository at first.
 
-- Initialize frameworks inside placeholder folders.
-- Install packages inside placeholder folders.
-- Add application or service code inside placeholder folders.
-- Create local package manifests inside placeholder folders.
-- Treat placeholder folders as final repositories.
-
-When a real repository is ready, the placeholder folder should be replaced by the Git submodule through an intentional repository operation.
-
-## Shared Packages Strategy
-
-The shared packages strategy will be decided later.
-
-Possible future approaches include:
-
-- Keeping `packages/` in the orchestration repository.
-- Moving shared packages into one or more independent repositories.
-- Publishing shared packages through a private package registry.
-- Using selected shared packages as submodules.
-
-No shared package strategy should be finalized until the platform needs, deployment model, and ownership boundaries are clearer.
-
-## Principle
-
-The orchestration repository coordinates the platform. App and service repositories own implementation details.
-
-This separation keeps Facturance scalable, maintainable, and ready for independent development and deployment across a larger engineering organization.
+If the platform grows to require independent versioning, publishing, or ownership for shared logic, selected packages can later become independent packages or separate repositories.
 

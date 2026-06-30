@@ -1,6 +1,1 @@
-# Mobile App Submodule Placeholder
-
-This folder is reserved for the future `mobile-app` Git submodule.
-
-Do not initialize frameworks, install packages, or add application code here until the independent repository is created and added as a submodule.
-
+This folder is reserved for a future Git submodule. Do not initialize framework code here until the submodule repository is created and linked.
