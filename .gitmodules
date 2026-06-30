@@ -10,3 +10,6 @@
 [submodule "apps/desktop-app"]
 	path = apps/desktop-app
 	url = https://github.com/Abdlehakim/facturance-desktop-app.git
+[submodule "apps/mobile-app"]
+	path = apps/mobile-app
+	url = https://github.com/Abdlehakim/facturance-mobile-app.git
