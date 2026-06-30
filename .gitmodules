@@ -1,3 +1,6 @@
 [submodule "apps/website"]
 	path = apps/website
 	url = https://github.com/Abdlehakim/facturance-website.git
+[submodule "apps/client-dashboard"]
+	path = apps/client-dashboard
+	url = https://github.com/Abdlehakim/facturance-client-dashboard.git
