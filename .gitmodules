@@ -25,3 +25,6 @@
 [submodule "services/sync-api"]
 	path = services/sync-api
 	url = https://github.com/Abdlehakim/facturance-sync-api.git
+[submodule "services/worker"]
+	path = services/worker
+	url = https://github.com/Abdlehakim/facturance-worker.git
