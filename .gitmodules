@@ -13,3 +13,6 @@
 [submodule "apps/mobile-app"]
 	path = apps/mobile-app
 	url = https://github.com/Abdlehakim/facturance-mobile-app.git
+[submodule "services/auth-api"]
+	path = services/auth-api
+	url = https://github.com/Abdlehakim/facturance-auth-api.git
