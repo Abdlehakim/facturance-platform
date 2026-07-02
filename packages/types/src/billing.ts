@@ -1,5 +1,7 @@
 export type PlanId = "starter" | "professional" | "business" | "enterprise";
 
+export type SelectablePlanId = Exclude<PlanId, "enterprise">;
+
 export type SubscriptionStatus =
   | "trialing"
   | "active"
