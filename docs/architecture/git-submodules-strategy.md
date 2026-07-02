@@ -55,4 +55,3 @@ The orchestration repository should always point to known-good app and service c
 Shared packages may remain in the main repository at first.
 
 If the platform grows to require independent versioning, publishing, or ownership for shared logic, selected packages can later become independent packages or separate repositories.
-
