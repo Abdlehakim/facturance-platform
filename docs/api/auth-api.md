@@ -77,3 +77,89 @@ subscription draft for a self-service plan.
 - No advanced permissions.
 - No multi-company setup.
 - No dashboard implementation.
+
+## POST /auth/login
+
+Authenticates an existing user with email and password.
+
+### Request Body
+
+```ts
+{
+  email: string;
+  password: string;
+}
+```
+
+### Successful Response
+
+```ts
+{
+  user: {
+    id: string;
+    email: string;
+    fullName: string;
+  };
+  session: {
+    accessToken: string;
+    tokenType: "Bearer";
+  };
+}
+```
+
+### Validation Rules
+
+- `email` is required and must be a valid email.
+- `password` is required.
+
+### First-Version Behavior
+
+- Normalize email.
+- Verify the submitted password against the stored password hash.
+- Return a minimal bearer access token.
+- Return the authenticated user without password fields.
+
+### Excluded From This Milestone
+
+- No refresh tokens.
+- No cookies.
+- No password reset.
+- No email verification.
+- No role/permission system.
+- No dashboard guards.
+
+## GET /auth/me
+
+Returns the current authenticated user from a bearer token.
+
+### Headers
+
+```txt
+Authorization: Bearer <accessToken>
+```
+
+### Successful Response
+
+```ts
+{
+  user: {
+    id: string;
+    email: string;
+    fullName: string;
+  };
+}
+```
+
+### First-Version Behavior
+
+- Read the bearer token from the `Authorization` header.
+- Verify the token signature.
+- Resolve the user from the token subject.
+- Return the user without password fields.
+
+### Excluded From This Milestone
+
+- No tenant loading.
+- No subscription loading.
+- No permissions.
+- No refresh token rotation.

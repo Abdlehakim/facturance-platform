@@ -34,3 +34,22 @@ export type RegisterResponse = {
   };
   redirectTo: string;
 };
+
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
+export type AuthSession = {
+  accessToken: string;
+  tokenType: "Bearer";
+};
+
+export type LoginResponse = {
+  user: AuthUser;
+  session: AuthSession;
+};
+
+export type AuthMeResponse = {
+  user: AuthUser;
+};
