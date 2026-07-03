@@ -39,7 +39,9 @@ export type RegisterResponse = {
 };
 
 export type LoginRequest = {
-  email: string;
+  phoneCountry?: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   password: string;
 };
 
