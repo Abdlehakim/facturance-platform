@@ -13,6 +13,9 @@ export type RegisterRequest = {
   email: string;
   password: string;
   companyName: string;
+  phoneCountry: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   planId: SelectablePlanId;
 };
 

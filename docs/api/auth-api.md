@@ -17,6 +17,9 @@ subscription draft for a self-service plan.
   email: string;
   password: string;
   companyName: string;
+  phoneCountry: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   planId: "starter" | "professional" | "business";
 }
 ```
@@ -54,6 +57,9 @@ subscription draft for a self-service plan.
 - `email` is required and must be a valid email.
 - `password` is required.
 - `companyName` is required.
+- `phoneCountry` is required.
+- `phoneCountryCode` is required.
+- `phoneNumber` is required.
 - `planId` must be one of:
   - `starter`
   - `professional`
