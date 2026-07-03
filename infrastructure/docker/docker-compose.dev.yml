@@ -1,0 +1,43 @@
+name: facturance-local-dev
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: facturance-postgres-dev
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-facturance}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-facturance}
+      POSTGRES_DB: ${POSTGRES_DB:-facturance_platform}
+    volumes:
+      - facturance_postgres_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-facturance} -d ${POSTGRES_DB:-facturance_platform}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7
+    container_name: facturance-redis-dev
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: facturance-mailpit-dev
+    restart: unless-stopped
+    ports:
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+      - "${MAILPIT_SMTP_PORT:-1025}:1025"
+
+volumes:
+  facturance_postgres_dev_data:
