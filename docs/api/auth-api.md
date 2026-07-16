@@ -86,13 +86,16 @@ subscription draft for a self-service plan.
 
 ## POST /auth/login
 
-Authenticates an existing user with email and password.
+Authenticates an existing user through an international phone number and
+password.
 
 ### Request Body
 
 ```ts
 {
-  email: string;
+  phoneCountry?: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   password: string;
 }
 ```
@@ -115,15 +118,20 @@ Authenticates an existing user with email and password.
 
 ### Validation Rules
 
-- `email` is required and must be a valid email.
+- `phoneCountry` is optional display metadata.
+- `phoneCountryCode` is required.
+- `phoneNumber` is required.
 - `password` is required.
 
 ### First-Version Behavior
 
-- Normalize email.
-- Verify the submitted password against the stored password hash.
-- Return a minimal bearer access token.
-- Return the authenticated user without password fields.
+1. Trim and normalize `phoneCountryCode`.
+2. Trim and normalize `phoneNumber`.
+3. Combine them into the canonical normalized phone value.
+4. Find the user through `phoneNormalized`.
+5. Verify the submitted password against the stored password hash.
+6. Return the authenticated user without password fields.
+7. Return the existing bearer session response.
 
 ### Excluded From This Milestone
 
