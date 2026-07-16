@@ -1,30 +1,40 @@
 [submodule "apps/website"]
 	path = apps/website
 	url = https://github.com/Abdlehakim/facturance-website.git
+	branch = main
 [submodule "apps/client-dashboard"]
 	path = apps/client-dashboard
 	url = https://github.com/Abdlehakim/facturance-platform-client-dashboard.git
+	branch = main
 [submodule "apps/admin-dashboard"]
 	path = apps/admin-dashboard
 	url = https://github.com/Abdlehakim/facturance-admin-dashboard.git
+	branch = main
 [submodule "apps/desktop-app"]
 	path = apps/desktop-app
 	url = https://github.com/Abdlehakim/facturance-desktop-app.git
+	branch = main
 [submodule "apps/mobile-app"]
 	path = apps/mobile-app
 	url = https://github.com/Abdlehakim/facturance-mobile-app.git
+	branch = main
 [submodule "services/auth-api"]
 	path = services/auth-api
 	url = https://github.com/Abdlehakim/facturance-auth-api.git
+	branch = main
 [submodule "services/client-api"]
 	path = services/client-api
 	url = https://github.com/Abdlehakim/facturance-client-api.git
+	branch = main
 [submodule "services/admin-api"]
 	path = services/admin-api
 	url = https://github.com/Abdlehakim/facturance-admin-api.git
+	branch = main
 [submodule "services/sync-api"]
 	path = services/sync-api
 	url = https://github.com/Abdlehakim/facturance-sync-api.git
+	branch = main
 [submodule "services/worker"]
 	path = services/worker
 	url = https://github.com/Abdlehakim/facturance-worker.git
+	branch = main
