@@ -47,6 +47,10 @@ subscription draft for a self-service plan.
     status: "trialing" | "active";
     billingCycle: "monthly" | "yearly";
   };
+  session: {
+    accessToken: string;
+    tokenType: "Bearer";
+  };
   redirectTo: string;
 }
 ```
@@ -73,6 +77,7 @@ subscription draft for a self-service plan.
 - Create tenant/company.
 - Add user as owner member.
 - Create subscription draft with status `trialing`.
+- Create a persisted 30-day session and return its bearer token.
 - Return `redirectTo: "/dashboard/onboarding"`.
 
 ### Excluded From This Milestone
@@ -130,8 +135,13 @@ password.
 3. Combine them into the canonical normalized phone value.
 4. Find the user through `phoneNormalized`.
 5. Verify the submitted password against the stored password hash.
-6. Return the authenticated user without password fields.
-7. Return the existing bearer session response.
+6. Generate a cryptographically random opaque session token.
+7. Hash the token with SHA-256.
+8. Store only the hash in PostgreSQL.
+9. Set `expiresAt` to 30 days after session creation.
+10. Return the raw token once as `accessToken`.
+11. Return `tokenType: "Bearer"`.
+12. Return the authenticated user without password fields.
 
 ### Excluded From This Milestone
 
@@ -166,10 +176,13 @@ Authorization: Bearer <accessToken>
 
 ### First-Version Behavior
 
-- Read the bearer token from the `Authorization` header.
-- Verify the token signature.
-- Resolve the user from the token subject.
-- Return the user without password fields.
+1. Read the bearer token from the `Authorization` header.
+2. Hash the supplied raw token with SHA-256.
+3. Resolve the persisted session by `tokenHash`.
+4. Reject missing, expired, or revoked sessions.
+5. Resolve the user through the session relation.
+6. Update `lastUsedAt`.
+7. Return the user without password fields.
 
 ### Excluded From This Milestone
 
