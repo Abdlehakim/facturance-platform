@@ -6,6 +6,7 @@ create table if not exists app_data.tenants (
   owner_user_id uuid not null,
   plan_id text not null,
   subscription_status text not null default 'trialing',
+  onboarding_completed_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
 

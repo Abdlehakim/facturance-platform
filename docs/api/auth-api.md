@@ -89,7 +89,6 @@ HTTP 201.
 - No email verification.
 - No advanced permissions.
 - No multi-company setup.
-- No dashboard implementation.
 
 ## POST /auth/login
 
@@ -154,7 +153,6 @@ HTTP 200.
 - No password reset.
 - No email verification.
 - No role/permission system.
-- No dashboard route guards.
 
 ## GET /auth/me
 
@@ -196,6 +194,110 @@ HTTP 200.
 - No subscription loading.
 - No permissions.
 - No refresh token rotation.
+
+## GET /auth/onboarding/company
+
+Loads the single company owned by the authenticated user for minimum
+onboarding.
+
+### Headers
+
+```txt
+Authorization: Bearer <accessToken>
+```
+
+### Request Body
+
+There is no request body.
+
+### Successful Response
+
+HTTP 200:
+
+```ts
+{
+  company: {
+    id: string;
+    companyName: string;
+    onboardingCompletedAt: string | null;
+  };
+}
+```
+
+### Behavior
+
+1. Validate the persisted bearer session.
+2. Resolve companies where `ownerUserId` matches the authenticated user.
+3. Require exactly one owned company.
+4. Return the company name and onboarding-completion timestamp.
+5. Do not accept a company ID from the browser.
+
+### Failure Cases
+
+- No company returns a not-found response.
+- Multiple owned companies return a conflict because company selection is not
+  implemented.
+- A missing or invalid session returns an unauthorized response.
+
+## PATCH /auth/onboarding/company
+
+Confirms or updates the minimum company profile and completes onboarding.
+
+### Headers
+
+```txt
+Authorization: Bearer <accessToken>
+```
+
+### Request Body
+
+```ts
+{
+  companyName: string;
+}
+```
+
+### Validation Rules
+
+- `companyName` is required.
+- `companyName` is trimmed.
+- `companyName` must contain at least one character after trimming.
+
+### Successful Response
+
+HTTP 200:
+
+```ts
+{
+  company: {
+    id: string;
+    companyName: string;
+    onboardingCompletedAt: string;
+  };
+}
+```
+
+### Behavior
+
+1. Validate the persisted bearer session.
+2. Resolve exactly one company owned by the authenticated user.
+3. Update `companyName`.
+4. Set `onboardingCompletedAt` when it is currently null.
+5. Preserve the original completion timestamp on repeated requests.
+6. Do not modify plan, subscription, ownership, or membership.
+7. Do not accept tenant or user identifiers from the client.
+
+### Company Onboarding Scope
+
+This milestone provides only:
+
+- Minimum company-name confirmation.
+- Completion persistence.
+- Protected onboarding routing.
+
+Full dashboard functionality and a full company profile remain excluded. There
+is no multi-company selection, advanced permissions, invoice configuration,
+payment or Stripe integration, refresh-token support, or cookie authentication.
 
 ## POST /auth/logout
 
