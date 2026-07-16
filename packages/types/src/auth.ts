@@ -58,3 +58,7 @@ export type LoginResponse = {
 export type AuthMeResponse = {
   user: AuthUser;
 };
+
+export type LogoutResponse = {
+  success: true;
+};

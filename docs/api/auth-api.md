@@ -26,6 +26,8 @@ subscription draft for a self-service plan.
 
 ### Successful Response
 
+HTTP 201.
+
 ```ts
 {
   user: {
@@ -107,6 +109,8 @@ password.
 
 ### Successful Response
 
+HTTP 200.
+
 ```ts
 {
   user: {
@@ -150,7 +154,7 @@ password.
 - No password reset.
 - No email verification.
 - No role/permission system.
-- No dashboard guards.
+- No dashboard route guards.
 
 ## GET /auth/me
 
@@ -163,6 +167,8 @@ Authorization: Bearer <accessToken>
 ```
 
 ### Successful Response
+
+HTTP 200.
 
 ```ts
 {
@@ -190,3 +196,78 @@ Authorization: Bearer <accessToken>
 - No subscription loading.
 - No permissions.
 - No refresh token rotation.
+
+## POST /auth/logout
+
+Revokes the persisted session represented by the supplied bearer token.
+
+### Headers
+
+```txt
+Authorization: Bearer <accessToken>
+```
+
+### Request Body
+
+There is no request body.
+
+### Successful Response
+
+HTTP 200:
+
+```ts
+{
+  success: true;
+}
+```
+
+### Behavior
+
+1. Read the bearer token from the `Authorization` header.
+2. Resolve and validate the persisted session.
+3. Set `revokedAt` on that session.
+4. Leave the session row stored for audit and lifecycle tracking.
+5. Reject the token in future authenticated requests.
+
+### Failure Behavior
+
+Missing, malformed, unknown, expired, or already-revoked credentials return
+the same unauthorized response.
+
+## POST /auth/logout-all
+
+Revokes all active sessions belonging to the authenticated user.
+
+### Headers
+
+```txt
+Authorization: Bearer <accessToken>
+```
+
+### Request Body
+
+There is no request body.
+
+### Successful Response
+
+HTTP 200:
+
+```ts
+{
+  success: true;
+}
+```
+
+### Behavior
+
+1. Resolve the authenticated user from the current valid session.
+2. Set the same `revokedAt` timestamp on every non-revoked session belonging
+   to that user.
+3. Include the current session in the revocation.
+4. Do not affect sessions belonging to other users.
+5. Leave revoked session rows stored.
+
+### Security
+
+The endpoint does not accept a user ID from the request body or URL. The
+authenticated session determines which user's sessions are revoked.
