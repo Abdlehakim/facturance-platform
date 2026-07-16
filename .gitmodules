@@ -3,7 +3,7 @@
 	url = https://github.com/Abdlehakim/facturance-website.git
 [submodule "apps/client-dashboard"]
 	path = apps/client-dashboard
-	url = https://github.com/Abdlehakim/facturance-client-dashboard.git
+	url = https://github.com/Abdlehakim/facturance-platform-client-dashboard.git
 [submodule "apps/admin-dashboard"]
 	path = apps/admin-dashboard
 	url = https://github.com/Abdlehakim/facturance-admin-dashboard.git
